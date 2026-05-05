@@ -7,7 +7,7 @@ let enrolledUsers = JSON.parse(localStorage.getItem('enrolledUsers')) || [];
 async function init() {
     statusText.innerText = "Connecting to AI Core...";
     try {
-        // Points directly to your models folder
+        // Points directly to the 'models' folder relative to this file
         await Promise.all([
             faceapi.nets.ssdMobilenetv1.loadFromUri('models'),
             faceapi.nets.faceLandmark68Net.loadFromUri('models'),
@@ -26,7 +26,6 @@ async function init() {
 async function registerFace() {
     const name = nameInput.value;
     if (!name) return alert("System requires a name for enrollment.");
-
     statusText.innerText = "Mapping Facial Architecture...";
     
     const detection = await faceapi.detectSingleFace(video).withFaceLandmarks().withFaceDescriptor();
@@ -41,13 +40,13 @@ async function registerFace() {
         statusText.style.color = "#00ff00";
         nameInput.value = "";
     } else {
-        statusText.innerText = "FAILED: Subject Not Detected. Ensure Face is Visible.";
+        statusText.innerText = "FAILED: Subject Not Detected.";
         statusText.style.color = "#ff4444";
     }
 }
 
 async function verifyFace() {
-    statusText.innerText = "Scanning Pattern... Comparing with Database";
+    statusText.innerText = "Scanning Pattern...";
     const detection = await faceapi.detectSingleFace(video).withFaceLandmarks().withFaceDescriptor();
 
     if (!detection) {
@@ -56,11 +55,9 @@ async function verifyFace() {
     }
 
     let bestMatch = { name: "Unknown", distance: 1.0 };
-    
     enrolledUsers.forEach(user => {
         const savedDescriptor = new Float32Array(user.descriptor);
         const distance = faceapi.euclideanDistance(detection.descriptor, savedDescriptor);
-        
         if (distance < 0.45 && distance < bestMatch.distance) {
             bestMatch = { name: user.name, distance: distance };
         }
