@@ -5,35 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AuraID | Biometric Security</title>
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Link to the local file you just downloaded via terminal -->
     <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
-    
-    <!-- Your project logic -->
     <script defer src="script.js"></script>
 </head>
 <body>
-
     <div class="glass-box">
         <h1>AuraID</h1>
         <p id="status">System Initializing...</p>
-
         <div class="video-container">
             <video id="myVideo" autoplay muted playsinline></video>
-            <div class="scan-line"></div> <!-- The Blue Laser -->
+            <div class="scan-line"></div>
         </div>
-
         <div class="input-area">
             <input type="text" id="userName" placeholder="Enter Full Name">
         </div>
-
         <div class="button-group">
             <button class="reg-btn" onclick="registerFace()">Enroll User</button>
             <button class="verify-btn" onclick="verifyFace()">Verify Identity</button>
         </div>
-
         <button class="clear-btn" onclick="clearData()">Clear System Memory</button>
     </div>
-
 </body>
 </html>
