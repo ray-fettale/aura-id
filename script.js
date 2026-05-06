@@ -4,13 +4,15 @@ const nameInput = document.getElementById('userName');
 
 let enrolledUsers = JSON.parse(localStorage.getItem('enrolledUsers')) || [];
 
+const MODEL_URL = 'https://justadudewhohacks.github.io/face-api.js/models';
+
 async function init() {
     statusText.innerText = "Connecting to AI Core...";
     try {
         await Promise.all([
-            faceapi.nets.ssdMobilenetv1.loadFromUri('https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/weights'),
-            faceapi.nets.faceLandmark68Net.loadFromUri('https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/weights'),
-            faceapi.nets.faceRecognitionNet.loadFromUri('https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/weights')
+            faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL),
+            faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+            faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL)
         ]);
         const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
         video.srcObject = stream;
